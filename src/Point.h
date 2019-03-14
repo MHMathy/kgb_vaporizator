@@ -1,17 +1,21 @@
-#ifndef POSITION_H
-#define POSITION_H
+#ifndef POINT_H
+#define POINT_H
 
-class Position
+class Point
 {
+
 private:
-  int x,y;
+  float x,y;
 
 public:
 
-  int getX();
+  float getX();
   //Fonction permettant de récupérer la coordonnée X
-  int getY();
+  float getY();
   //Fonction permettant de récupérer la coordonnée Y
+
+  void setX(float new_x);
+  void setY(float new_y);
 };
 
 

@@ -9,6 +9,12 @@ private:
   Position posHero;
 
 public:
+  Hero ();
+  ~Hero ();
+  void deplacement(int x, int y);
+  void tir();
+
+
 
 
 };
