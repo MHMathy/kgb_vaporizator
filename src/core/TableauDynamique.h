@@ -1,7 +1,5 @@
-#ifndef _TAB_DYN
-#define _TAB_DYN
-
-#include "ElementTD.h"
+#ifndef TAB_DYN
+#define TAB_DYN
 
 class TableauDynamique {
 public:
@@ -12,7 +10,7 @@ public:
     */
     unsigned int capacite;
     unsigned int taille_utilisee;
-    ElementTD * ad;
+    void * ad;
 
     /* fonctions membres */
     /* ================= */
@@ -25,8 +23,7 @@ public:
 
     ~TableauDynamique (); // Destructeur
     /* Postcondition : la mémoire allouée dynamiquement est libérée. */
-
-	void vider ();
+    void vider ();
     /* Postcondition : la mémoire allouée dynamiquement est libérée.
 	                   le tableau a 1 emplacement alloué mais vide (taille utilisée nulle) */
 
