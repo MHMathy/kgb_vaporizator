@@ -1,10 +1,10 @@
-#include "winTxt.h"
+#include "AffichageTXT.h"
 #include "txtJeu.h"
 
 int main ( int argc, char** argv ) {
     termClear();
-	Jeu jeu;
-	txtBoucle(jeu);
+	World wor;
+	txtBoucle(wor);
     termClear();
 	return 0;
 }

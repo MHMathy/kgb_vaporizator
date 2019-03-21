@@ -1,14 +1,16 @@
-#ifndef WORLD_H
-#define WORLD_H
+#ifndef JEU_H
+#define JEU_H
 #include "World.h"
+//#include <windows.h>
 
-class jeu
+class Jeu
 {
-private:
+public:
   World w;
 
-}
-
-
+  Jeu ();
+  void actionsAutomatiques ();
+  
+};
 
 #endif

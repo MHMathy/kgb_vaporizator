@@ -1,23 +1,22 @@
 #ifndef HERO_H
 #define HERO_H
 #include "Point.h"
-#include <SDL2/SDL.h>
-#include <math.h>
 
 class Hero
 {
   private:
     Position posHero;
-    int sante;
+    int health;
 
   public:
     Hero ();
     ~Hero ();
-    void deplacement(int x, int y);
+    void deplacementGauche();
+    void deplacementDroite();
+    void deplacementHaut();
+    void deplacementBas();
     void tir();
-
-
-
-
+    float getX() const;
+    float getY() const;
 };
 #endif

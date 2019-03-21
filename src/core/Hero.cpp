@@ -12,20 +12,26 @@ Hero::~Hero()
 
 }
 
-void Hero::deplacement(string direction);
+void Hero::deplacementGauche ()
 {
-  switch (direction)
-  {
-    case "haut":
-      this.posHero.x
-  }
+  posHero.x--;
 }
 
-void Hero::Hero()
+void Hero::deplacementDroite ()
 {
-
+  posHero.x++;
 }
+
+void Hero::deplacementHaut ()
 {
-
-
+  posHero.y++;
 }
+
+void Hero::deplacementBas()
+{
+   posHero.y--;
+}
+
+float Hero::getX () const { return posHero.x; }
+
+float Hero::getY () const { return posHero.y; }
