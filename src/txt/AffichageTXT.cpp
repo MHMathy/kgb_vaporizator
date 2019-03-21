@@ -1,4 +1,4 @@
-#include "AffichageTxt.h"
+#include "AffichageTXT.h"
 #include <cassert>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -74,7 +74,7 @@ void termInit()      // configure la saisie : ne pas afficher les caracteres tap
 #endif
 }
 
-WinTXT::WinTXT (int dx, int dy) {
+AffichageTXT::AffichageTXT (int dx, int dy) {
     dimx = dx;
     dimy = dy;
     win = new char[dimx*dimy];
@@ -82,13 +82,13 @@ WinTXT::WinTXT (int dx, int dy) {
     termInit();
 }
 
-void WinTXT::clear (char c) {
+void AffichageTXT::clear (char c) {
     for(int i=0;i<dimx;++i)
         for(int j=0;j<dimy;++j)
             print(i,j,c);
 }
 
-void WinTXT::print (int x, int y, char c) {
+void AffichageTXT::print (int x, int y, char c) {
     if (x<0) return;
     if (y<0) return;
     if (x>=dimx) return;
@@ -96,16 +96,16 @@ void WinTXT::print (int x, int y, char c) {
     win[y*dimx+x] = c;
 }
 
-void WinTXT::print (int x, int y, char* c) {
+void AffichageTXT::print (int x, int y, char* c) {
     int i=0;
     while (c[i]!='\0') {print(x+i,y,c[i]);++i;}
 }
 
-void WinTXT::draw (int x, int y) {
+void AffichageTXT::draw (int x, int y) {
     termMove(0,0);
     for(int j=0;j<dimy;++j) {
         for(int i=0;i<dimx;++i)
-            printf("%c",win[j*dimx+i]);
+            printf("%c",win[i*dimx+j]);
         printf("\n");
     }
     termMove(0,dimy);
@@ -124,7 +124,7 @@ int kbhit() {
 }
 #endif
 
-void WinTXT::pause() {
+void AffichageTXT::pause() {
 #ifdef _WIN32
     system("pause");
 #else
@@ -133,7 +133,7 @@ void WinTXT::pause() {
 #endif
 }
 
-char WinTXT::getCh() { // lire un caractere si une touche a ete pressee
+char AffichageTXT::getCh() { // lire un caractere si une touche a ete pressee
     char touche=0;
 #ifdef _WIN32
     if (kbhit())

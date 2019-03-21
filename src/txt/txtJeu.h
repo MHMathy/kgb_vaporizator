@@ -1,8 +1,9 @@
 #ifndef _TXTJEU_H
 #define _TXTJEU_H
 
-#include "Jeu.h"
+#include "../core/Jeu.h"
+#include "../core/World.h"
 
-void txtBoucle (Jeu & j);
+void txtBoucle (World& w);
 
 #endif

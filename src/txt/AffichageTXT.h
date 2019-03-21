@@ -7,7 +7,7 @@ class AffichageTXT {
 private:
 
     int dimx;       //!< \brief largeur
-    int dimy;       //!< \brief heuteur
+    int dimy;       //!< \brief hauteur
     char* win;      //!< \brief stocke le contenu de la fen�tre dans un tableau 1D mais on y accede en 2D
 
 public:

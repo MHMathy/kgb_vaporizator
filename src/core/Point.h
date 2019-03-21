@@ -1,9 +1,13 @@
 #ifndef POINT_H
 #define POINT_H
 
-struct Point
+class Point
 {
-  float x,y;
+public:
+  float x;
+  float y;
+
+  Point();
 };
 
 typedef Point Position;

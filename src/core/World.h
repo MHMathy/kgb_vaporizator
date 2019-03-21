@@ -8,15 +8,25 @@
 class World
 {
 private:
-  Hero  exterminator3000;
+  Hero  h;
   Niveau  niveauActu;
-
 public:
 
+  World();
+
+  Terrain& getTerrain ();
+  Hero& getHero ();
+  const Terrain& getConstTerrain () const;
+  const Hero& getConstHero () const;
+  //const Fantome& getConstEnnemi () const;
+  //int getNombreEnnemi() const;
+  void actionClavier(const char touche); // rend vrai si mange une pastille, faux sinon
 
 
 
-}
+
+
+};
 
 
 #endif

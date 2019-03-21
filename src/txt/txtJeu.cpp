@@ -4,14 +4,16 @@
 #else
 #include <unistd.h>
 #endif // WIN32
-#include "winTxt.h"
-
+#include "AffichageTXT.h"
+#include "txtJeu.h"
 #include "Jeu.h"
+#include "World.h"
 
-void txtAff(WinTXT & win, const Jeu & jeu) {
-	const Terrain& ter = jeu.getConstTerrain();
-	const Pacman& pac = jeu.getConstPacman();
-	const Fantome& fan = jeu.getConstFantome();
+
+void txtAff(AffichageTXT & win, const World & w) {
+	const Terrain& ter = w.getConstTerrain();
+	const Hero& h = w.getConstHero();
+	//const Ennemi& enn = w.getConstEnnemi();
 
 	win.clear();
 
@@ -21,23 +23,23 @@ void txtAff(WinTXT & win, const Jeu & jeu) {
 			win.print(x,y,ter.getXY(x,y));
 
     // Affichage de Pacman
-	win.print(pac.getX(),pac.getY(),'P');
+	win.print(h.getX(),h.getY(),'A');
 	// Affichage du Fantome
-	win.print(fan.getX(),fan.getY(),'F');
+	//win.print(fan.getX(),fan.getY(),'F');
 
 	win.draw();
 }
 
-void txtBoucle (Jeu & jeu) {
+void txtBoucle (World & w) {
 	// Creation d'une nouvelle fenetre en mode texte
 	// => fenetre de dimension et position (WIDTH,HEIGHT,STARTX,STARTY)
-    WinTXT win (jeu.getConstTerrain().getDimX(),jeu.getConstTerrain().getDimY());
+    AffichageTXT win (w.getConstTerrain().getDimX(),w.getConstTerrain().getDimY());
 
 	bool ok = true;
 	int c;
 
 	do {
-	    txtAff(win,jeu);
+	    txtAff(win,w);
 
         #ifdef _WIN32
         Sleep(100);
@@ -45,23 +47,23 @@ void txtBoucle (Jeu & jeu) {
 		usleep(100000);
         #endif // WIN32
 
-		jeu.actionsAutomatiques();
+		//jeu.actionsAutomatiques();
 
 		c = win.getCh();
 		switch (c) {
-			case 'k':
-				jeu.actionClavier('g');
-				break;
-			case 'm':
-				jeu.actionClavier('d');
-				break;
-			case 'l':
-				jeu.actionClavier('h');
-				break;
-			case 'o':
-				jeu.actionClavier('b');
+			case 'z':
+				w.actionClavier('h');
 				break;
 			case 'q':
+				w.actionClavier('g');
+				break;
+			case 's':
+				w.actionClavier('b');
+				break;
+			case 'd':
+				w.actionClavier('d');
+				break;
+			case 'p':
 				ok = false;
 				break;
 		}
