@@ -1,21 +1,34 @@
-ifndef PROJECTILE_H
+#ifndef PROJECTILE_H
 #define PROJECTILE_H
-#include <SDL2/SDL.h>
-#include <math.h>
+
 #include "Point.h"
+//#include "Ennemi.h"
+#include "Terrain.h"
 
 class Projectile
 {
 private:
-  Position posActuelle;
-  Position posInitial;
+  bool etat;
+  Position posActu;
+  Position posInit;
   Vecteur direction;
   int degats;
 
 public:
   Projectile(); // constructeur sans arguments, initialise à l'origine
-  Projectile(Position posDepart, Vecteur newDirection); // Constructeur qui initialise un projectile en fonction d'une position de départ en paramètre
-  ~Projectile();
+  Projectile(Position posDepart, const char dir); // Constructeur qui initialise un projectile en fonction d'une position de départ en paramètre
+  Position futurPos();
+  void collisionTer(const Terrain & ter);
+  //void collisionEn(Ennemi & en);
+  void trajectoire(const Terrain & ter);//, Ennemi& en);
+
+  void chEtat();
+
+  float getX () const;
+
+  float getY () const;
+
+  bool getEtat () const;
 
 };
 #endif

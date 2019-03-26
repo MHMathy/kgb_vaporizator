@@ -2,7 +2,9 @@
 #include <iostream>
 
 
-Niveau::Niveau() : terrainActu()
+Niveau::Niveau() : en()
 {
-
+  string chemin = "data/testTerrain.txt";
+  terrainActu = Terrain(chemin);
+  //terrainActu = Terrain();
 }

@@ -105,7 +105,7 @@ void AffichageTXT::draw (int x, int y) {
     termMove(0,0);
     for(int j=0;j<dimy;++j) {
         for(int i=0;i<dimx;++i)
-            printf("%c",win[i*dimx+j]);
+            printf("%c",win[j*dimx+i]);
         printf("\n");
     }
     termMove(0,dimy);

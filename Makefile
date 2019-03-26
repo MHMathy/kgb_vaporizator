@@ -1,5 +1,5 @@
 
-CORE =core/Jeu.cpp core/World.cpp core/Niveau.cpp core/Terrain.cpp core/Hero.cpp core/Point.cpp
+CORE =core/Jeu.cpp core/World.cpp core/Hero.cpp core/Niveau.cpp core/Terrain.cpp core/Projectile.cpp core/Ennemi.cpp core/Point.cpp
 
 SRCS_TXT = $(CORE) txt/main_txt.cpp txt/txtJeu.cpp txt/AffichageTXT.cpp
 FINAL_TARGET_TXT = vaporizatorTXT
@@ -9,7 +9,7 @@ FINAL_TARGET_TXT = vaporizatorTXT
 #FINAL_TARGET_SDL = pacman_sdl
 #DEFINE_SDL = -DJEU_SDL
 
-#INCLUDE_DIR_SDL = -I/usr/include/SDL2
+#INCLUDE_DIR_SDL = -I/usr/include/SDL2;;
 #LIBS_SDL = -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
 
 CC					= g++
@@ -37,7 +37,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	#$(CC) -c $(CPPFLAGS) $(INCLUDE_DIR_SDL) $(INCLUDE_DIR) $< -o $@
 
 clean:
-	rm -rf $(OBJ_DIR) $(BIN_DIR)/$(FINAL_TARGET_TXT) #$(BIN_DIR)/$(FINAL_TARGET_SDL)
+	rm -rf $(OBJ_DIR) $(BIN_DIR)/$(FINAL_TARGET_TXT) $(BIN_DIR)/$(FINAL_TARGET_SDL)
 
 #\
 bin/vaporizatorTXT: obj/main_txt.o obj/txtJeu.o obj/AffichageTXT.o\
