@@ -74,6 +74,10 @@ Terrain::Terrain (string chemin) {
   }
 }
 
+Terrain::~Terrain()
+{
+
+}
 
 bool Terrain::estPositionValide (const int x, const int y) const
 {

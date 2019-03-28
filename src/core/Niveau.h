@@ -7,10 +7,13 @@
 class Niveau
 {
 public:
-  Ennemi en;
+  int nbEn;
+  Ennemi *tabEn;
   Terrain terrainActu;
 
   Niveau();
+  ~Niveau();
+
 
 
 };

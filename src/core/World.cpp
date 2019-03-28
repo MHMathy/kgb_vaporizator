@@ -1,3 +1,4 @@
+#include "Hero.h"
 #include "World.h"
 #include <iostream>
 
@@ -10,26 +11,36 @@ World::World() : h(), niveauActu()
 
 }
 
+World::~World()
+{
+  niveauActu.~Niveau();
+  h.~Hero();
+}
+
 Terrain& World::getTerrain () { return niveauActu.terrainActu; }
 
 Hero& World::getHero () {	return h; }
 
-Ennemi& World::getEnnemi () { return niveauActu.en; }
+Ennemi& World::getEnnemi (int i) { return niveauActu.tabEn[i]; }
+
+Ennemi* World::getAddTabEnnemi () const{return niveauActu.tabEn;}
+
 
 const Terrain& World::getConstTerrain () const { return niveauActu.terrainActu; }
 
 const Hero& World::getConstHero () const { return h; }
 
-const Ennemi& World::getConstEnnemi () const { return niveauActu.en; }
+const Ennemi& World::getConstEnnemi (int i) const { return niveauActu.tabEn[i]; }
 
-int World::getNombreEnnemi() const { return 1; }
+const int& World::getNombreEnnemi() const { return niveauActu.nbEn; }
 
 void World::actionsAutomatiques () {
     const Terrain& t = getTerrain();
-    Ennemi& en = getEnnemi();
-    Hero& h = getHero();
-    h.majProj(t);//,en);
-    en.bougeAuto(t);
+    Ennemi* en = getAddTabEnnemi();
+    h.majProj(t,en,niveauActu.nbEn);
+    for(int i=0;i<niveauActu.nbEn;i++){
+      en[i].bougeAuto(t);
+    }
 
 }
 
@@ -38,7 +49,6 @@ void World::actionClavier (const char touche)
 {
 
   Terrain& t = getTerrain();
-  Hero& h = getHero();
 	switch(touche)
 	{
 		case  'g':

@@ -1,4 +1,6 @@
 #include "Projectile.h"
+#include "Point.h"
+
 
 Projectile::Projectile()
 {
@@ -33,6 +35,11 @@ Projectile::Projectile(Position posDepart, const char dir)
   degats = 1;
 }
 
+Projectile::~Projectile()
+{
+
+}
+
 Position Projectile::futurPos()
 {
   Position p;
@@ -44,21 +51,52 @@ void Projectile::collisionTer(const Terrain & ter)
 {
   if (ter.estPositionValide(posActu.x,posActu.y)==false) etat = false;
 }
-/*void Projectile::collisionEn(Ennemi & en)
+
+void Projectile::collisionEn(Ennemi & en)
 {
   if(posActu==en.getPosEn()) {
     etat = false;
     en.statut = false;
   }
+}
+/*bool Projectile::collisionEn(Position p)
+{
+  if(p.x==posActu.x  && p.y==posActu.y)
+  {
+    etat = false;
+    return false;
+  }
+  else
+  {
+    return true;
+  }
 }*/
-void Projectile::trajectoire(const Terrain & ter)//, Ennemi & en)
+
+/*void Projectile::trajectoire(const Terrain & ter)//, Position posennemi)
+{
+  if (etat==true)
+  {
+    posActu = futurPos;
+    collisionTer(ter);
+    CollisionEn(posennemi);
+  }
+  else if (etat==false)
+  {
+    CollisionEn(posennemi)
+  }
+}*/
+
+
+void Projectile::trajectoire(const Terrain & ter, Ennemi * tabEnn ,int nbEn)
 {
   if(etat){
   posActu = futurPos();
-  //collisionEn(en);
+  //for(int i=0;i<nbE;i++)collisionEn(tabEnn[0]);
+  for(int i=0;i<nbEn;i++)collisionEn(tabEnn[i]);
   collisionTer(ter);
   }
 }
+
 void Projectile::chEtat()
 {
   etat=!etat;

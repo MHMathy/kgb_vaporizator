@@ -5,23 +5,23 @@ SRCS_TXT = $(CORE) txt/main_txt.cpp txt/txtJeu.cpp txt/AffichageTXT.cpp
 FINAL_TARGET_TXT = vaporizatorTXT
 #DEFINE_TXT = -DJEU_TXT
 
-#SRCS_SDL = $(CORE) sdl2/sdlJeu.cpp sdl2/main_sdl.cpp
-#FINAL_TARGET_SDL = pacman_sdl
+#SRCS_SDL = $(CORE) sdl/sdlJeu.cpp sdl/main_sdl.cpp // a decommenter++++++++++++++++++++++
+#FINAL_TARGET_SDL = vaporizatorSDL // a decommenter++++++++++++++++++++++++
 #DEFINE_SDL = -DJEU_SDL
 
-#INCLUDE_DIR_SDL = -I/usr/include/SDL2;;
-#LIBS_SDL = -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
+#INCLUDE_DIR_SDL = -I/usr/include/SDL2 // a decommenter++++++++++++
+#LIBS_SDL = -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer//idem +++++++++++
 
 CC					= g++
 LD 					= g++
-LDFLAGS  			=
-CPPFLAGS 			= -Wall -ggdb   #-O2   # pour optimiser
+LDFLAGS  			=   #à compléter ++++++++++++++
+CPPFLAGS 			= -g -W -Wall -ggdb   #-O2   # pour optimiser
 OBJ_DIR 			= obj
 SRC_DIR 			= src
 BIN_DIR 			= bin
 INCLUDE_DIR			= -Isrc -Isrc/core -Itxt #-Isrc/sdl2
 
-default: make_dir $(BIN_DIR)/$(FINAL_TARGET_TXT) #$(BIN_DIR)/$(FINAL_TARGET_SDL)
+default: make_dir $(BIN_DIR)/$(FINAL_TARGET_TXT) #$(BIN_DIR)/$(FINAL_TARGET_SDL) //++++++++++++++++++++++++++
 
 make_dir:
 	test -d $(OBJ_DIR) || mkdir -p $(OBJ_DIR) $(OBJ_DIR)/txt $(OBJ_DIR)/core #$(OBJ_DIR)/sdl2
@@ -29,12 +29,12 @@ make_dir:
 $(BIN_DIR)/$(FINAL_TARGET_TXT): $(SRCS_TXT:%.cpp=$(OBJ_DIR)/%.o)
 	$(LD) $+ -o $@ $(LDFLAGS)
 
-#$(BIN_DIR)/$(FINAL_TARGET_SDL): $(SRCS_SDL:%.cpp=$(OBJ_DIR)/%.o)
-#	$(LD) $+ -o $@ $(LDFLAGS) $(LIBS_SDL)
+#$(BIN_DIR)/$(FINAL_TARGET_SDL): $(SRCS_SDL:%.cpp=$(OBJ_DIR)/%.o) ++++++++++++++++++++++++++++
+#	$(LD) $+ -o $@ $(LDFLAGS) $(LIBS_SDL) +++++++++++++++++++++
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CC) -c $(CPPFLAGS) $(INCLUDE_DIR) $< -o $@
-	#$(CC) -c $(CPPFLAGS) $(INCLUDE_DIR_SDL) $(INCLUDE_DIR) $< -o $@
+	#$(CC) -c $(CPPFLAGS) $(INCLUDE_DIR_SDL) $(INCLUDE_DIR) $< -o $@ +++++++++++++++++++++++++++
 
 clean:
 	rm -rf $(OBJ_DIR) $(BIN_DIR)/$(FINAL_TARGET_TXT) $(BIN_DIR)/$(FINAL_TARGET_SDL)

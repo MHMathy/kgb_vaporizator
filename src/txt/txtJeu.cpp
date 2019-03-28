@@ -13,10 +13,8 @@
 void txtAff(AffichageTXT & win, const World & w) {
 	const Terrain& ter = w.getConstTerrain();
 	const Hero& h = w.getConstHero();
-	
-	const Ennemi& en = w.getConstEnnemi();
-	Projectile proj[20];
-	for(int i=0;i<20;i++)proj[i] = h.getConstTabProj(i);
+	const Ennemi * tEn=w.getAddTabEnnemi();
+	const Projectile * proj = h.getAddTabProj();
 
 
 	win.clear();
@@ -58,8 +56,9 @@ switch(h.getDir()){
 	win.print(h.getX(),h.getY(),charHero);
 	// Affichage de l'ennemi
 	//if(en.getX()>xmin && en.getX()<xmax && en.getY()>ymin && en.getY()<ymax)
-	if(en.statut)win.print(en.getX(),en.getY(),'E');
-
+	for(int i=0;i<3;i++){
+		if(tEn[i].statut)win.print(tEn[i].getX(),tEn[i].getY(),'E');
+}
 	for(int i=0;i<20;i++){
 		if(proj[i].getEtat()) win.print(proj[i].getX(),proj[i].getY(),'+');
 	}

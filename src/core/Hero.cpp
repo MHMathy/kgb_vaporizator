@@ -1,4 +1,5 @@
 #include "Hero.h"
+#include "Projectile.h"
 
 Hero::Hero()
 {
@@ -6,6 +7,8 @@ Hero::Hero()
   direc = 'o';
   posHero.x = 1;
   posHero.y = 1;
+  nbproj = 20;
+  tabProj = new Projectile[20];
   for(int i=0;i<20;i++) tabProj[i]=Projectile();
 }
 
@@ -48,11 +51,11 @@ void Hero::tir(const char dir)
   }
 }
 
-void Hero::majProj(const Terrain & ter)//, Ennemi & enn)
+void Hero::majProj(const Terrain & ter, Ennemi* tabEnn,int nbEn)
 {
   for(int i=0;i<20;i++)
   {
-    tabProj[i].trajectoire(ter);//,enn);
+    tabProj[i].trajectoire(ter,tabEnn,nbEn);
   }
 }
 
@@ -60,7 +63,10 @@ void Hero::chDir(const char newDir)
 {
   direc = newDir;
 }
-
+Projectile * Hero::getAddTabProj() const
+{
+  return tabProj;
+}
 Projectile Hero::getConstTabProj(int i) const
 {
   return tabProj[i];

@@ -8,7 +8,7 @@
 #define ENNEMI_H
 
 #include "Terrain.h"
-#include "Hero.h"
+//#include "Hero.h"
 #include "Point.h"
 
 /**
@@ -35,7 +35,7 @@ public:
 		bool getStatut () const;
 		Position getPosEn() const;
 
-    void versHero (const Terrain & t, const Hero & a);
+    //void versHero (const Terrain & t, const Hero & a);
     void bougeAuto (const Terrain & t);
 
 };
