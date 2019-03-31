@@ -32,6 +32,8 @@ const Hero& World::getConstHero () const { return h; }
 
 const Ennemi& World::getConstEnnemi (int i) const { return niveauActu.tabEn[i]; }
 
+const Ennemi * World::getConstAddTabEnn() const {return niveauActu.tabEn;}
+
 const int& World::getNombreEnnemi() const { return niveauActu.nbEn; }
 
 void World::actionsAutomatiques () {
@@ -39,7 +41,7 @@ void World::actionsAutomatiques () {
     Ennemi* en = getAddTabEnnemi();
     h.majProj(t,en,niveauActu.nbEn);
     for(int i=0;i<niveauActu.nbEn;i++){
-      en[i].bougeAuto(t);
+      if(en[i].getStatut())en[i].bougeAuto(t);
     }
 
 }

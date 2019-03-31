@@ -47,15 +47,12 @@ Terrain::Terrain (string chemin) {
     cout << "Unable to open file"<<endl;
       exit(1);// call system to stop
     }
-    cout<<'f';
     if(file.is_open())
     {
         while (!file.eof())
         {
             getline(file,terrain0[i]);  // get 1 line at a time. After getting this one line, I want to pass this 1 line data to another process and
             // get back to here again for the next line to process. without opening the file again
-            cout<<terrain0[i]<<endl;
-
             i++;
         }
 

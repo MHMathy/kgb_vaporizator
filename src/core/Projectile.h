@@ -18,6 +18,8 @@ public:
   Projectile(); // constructeur sans arguments, initialise à l'origine
   ~Projectile();
   Projectile(Position posDepart, const char dir); // Constructeur qui initialise un projectile en fonction d'une position de départ en paramètre
+
+
   Position futurPos();
   void collisionTer(const Terrain & ter);
   void collisionEn(Ennemi & en);

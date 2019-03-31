@@ -4,17 +4,17 @@
 Hero::Hero()
 {
   ptVie = 100;
-  direc = 'o';
+  direc = 'e';
   posHero.x = 1;
   posHero.y = 1;
   nbproj = 20;
   tabProj = new Projectile[20];
-  for(int i=0;i<20;i++) tabProj[i]=Projectile();
+  for(int i=0;i<nbproj;i++) tabProj[i]=Projectile();
 }
 
 Hero::~Hero ()
 {
-
+  //delete[] tabProj;
 }
 
 void Hero::deplacementGauche (const Terrain & t)
@@ -63,7 +63,13 @@ void Hero::chDir(const char newDir)
 {
   direc = newDir;
 }
-Projectile * Hero::getAddTabProj() const
+
+Projectile* Hero::getAddTabProj()
+{
+  return tabProj;
+}
+
+const Projectile* Hero::getConstAddTabProj() const
 {
   return tabProj;
 }

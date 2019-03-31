@@ -36,9 +36,7 @@ Projectile::Projectile(Position posDepart, const char dir)
 }
 
 Projectile::~Projectile()
-{
-
-}
+{}
 
 Position Projectile::futurPos()
 {
@@ -54,38 +52,11 @@ void Projectile::collisionTer(const Terrain & ter)
 
 void Projectile::collisionEn(Ennemi & en)
 {
-  if(posActu==en.getPosEn()) {
+  if(posActu==en.getPosEn() && en.getStatut()) {
     etat = false;
     en.statut = false;
   }
 }
-/*bool Projectile::collisionEn(Position p)
-{
-  if(p.x==posActu.x  && p.y==posActu.y)
-  {
-    etat = false;
-    return false;
-  }
-  else
-  {
-    return true;
-  }
-}*/
-
-/*void Projectile::trajectoire(const Terrain & ter)//, Position posennemi)
-{
-  if (etat==true)
-  {
-    posActu = futurPos;
-    collisionTer(ter);
-    CollisionEn(posennemi);
-  }
-  else if (etat==false)
-  {
-    CollisionEn(posennemi)
-  }
-}*/
-
 
 void Projectile::trajectoire(const Terrain & ter, Ennemi * tabEnn ,int nbEn)
 {

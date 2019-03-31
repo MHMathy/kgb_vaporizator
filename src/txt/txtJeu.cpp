@@ -14,7 +14,7 @@ void txtAff(AffichageTXT & win, const World & w) {
 	const Terrain& ter = w.getConstTerrain();
 	const Hero& h = w.getConstHero();
 	const Ennemi * tEn=w.getAddTabEnnemi();
-	const Projectile * proj = h.getAddTabProj();
+	const Projectile * proj = h.getConstAddTabProj();
 
 
 	win.clear();

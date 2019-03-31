@@ -5,6 +5,8 @@ Ennemi::Ennemi () {
 	posEn.x = posEn.y = 3;
 	dir = 0;
 }
+Ennemi::~Ennemi()
+{}
 
 void Ennemi::gauche (const Terrain & t) {
 	if (t.estPositionValide(posEn.x-1,posEn.y)) posEn.x--;

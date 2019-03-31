@@ -21,7 +21,8 @@ class Hero
     void deplacementDroite(const Terrain & t);
     void deplacementHaut(const Terrain & t);
     void deplacementBas(const Terrain & t);
-    Projectile * getAddTabProj() const;
+    Projectile* getAddTabProj();
+    const Projectile* getConstAddTabProj() const;
     void chDir(const char newDir);
     void tir(const char dir);
     void majProj(const Terrain & ter, Ennemi* tabEnn,int nbEn);

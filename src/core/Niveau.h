@@ -8,7 +8,7 @@ class Niveau
 {
 public:
   int nbEn;
-  Ennemi *tabEn;
+  Ennemi* tabEn;
   Terrain terrainActu;
 
   Niveau();

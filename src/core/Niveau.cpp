@@ -1,4 +1,6 @@
 #include "Niveau.h"
+#include "Ennemi.h"
+
 #include <iostream>
 
 
@@ -14,5 +16,5 @@ Niveau::Niveau()
 
 Niveau::~Niveau()
 {
-  delete [] tabEn;
+  //delete[] tabEn;
 }

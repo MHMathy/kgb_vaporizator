@@ -22,6 +22,7 @@ public:
   const Terrain& getConstTerrain () const;
   const Hero& getConstHero () const;
   const Ennemi& getConstEnnemi (int i) const;
+  const Ennemi * getConstAddTabEnn() const;
   const int& getNombreEnnemi() const;
 
 

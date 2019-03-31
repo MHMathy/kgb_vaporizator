@@ -9,8 +9,9 @@ public:
   World w;
 
   Jeu ();
+  ~Jeu();
   void actionsAutomatiques ();
-  
+
 };
 
 #endif
