@@ -14,7 +14,8 @@ public:
   Niveau();
   ~Niveau();
 
-
+//creer fonction terrain qui renvoie tableau de position des ennemis
+//intialiser les ennemis en fontion
 
 };
 

@@ -36,34 +36,40 @@ const Ennemi * World::getConstAddTabEnn() const {return niveauActu.tabEn;}
 
 const int& World::getNombreEnnemi() const { return niveauActu.nbEn; }
 
-void World::actionsAutomatiques () {
-    const Terrain& t = getTerrain();
+void World::actionsAutomatiques (Point coordSouris) {
+    Terrain& t = getTerrain();
     Ennemi* en = getAddTabEnnemi();
     h.majProj(t,en,niveauActu.nbEn);
     for(int i=0;i<niveauActu.nbEn;i++){
-      if(en[i].getStatut())en[i].bougeAuto(t);
+      if(en[i].getStatut())en[i].deplacementEnnemi(t);
     }
+    h.CalculerDirHeroByChar(coordSouris);
 
 }
 
 
-void World::actionClavier (const char touche)
+void World::actionClavier (const char touche,int*p)
 {
 
   Terrain& t = getTerrain();
+
 	switch(touche)
 	{
 		case  'g':
         h.deplacementGauche(t);
+        t.setTabDist(h.getX(),h.getY());
 				break;
 		case  'd':
         h.deplacementDroite(t);
+        t.setTabDist(h.getX(),h.getY());
 				break;
 		case  'h':
 				h.deplacementHaut(t);
+        t.setTabDist(h.getX(),h.getY());
 				break;
 		case  'b':
 				h.deplacementBas(t);
+        t.setTabDist(h.getX(),h.getY());
 		    break;
     case  'o':
         h.chDir('o');

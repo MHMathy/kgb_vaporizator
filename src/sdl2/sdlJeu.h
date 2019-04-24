@@ -6,7 +6,6 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 
-#include "Jeu.h"
 #include "World.h"
 
 //! \brief Pour g�rer une image avec SDL2
@@ -30,13 +29,11 @@ public:
 
 
 /**
-    La classe g�rant le jeu avec un affichage SDL
+    La classe gerant le jeu avec un affichage SDL
 */
 class sdlJeu {
 
 private :
-
-	Jeu jeu;
   World wor;
 
     SDL_Window * window;

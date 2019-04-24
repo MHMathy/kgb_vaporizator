@@ -7,6 +7,9 @@
 using namespace std;
 
 const int TAILLE_SPRITE = 32;
+int mouseX;
+int mouseY;
+Point * pp;
 
 float temps () {
     return float(SDL_GetTicks()) / CLOCKS_PER_SEC;  // conversion des ms en secondes en divisant par 1000
@@ -20,7 +23,8 @@ Image::Image () {
     has_changed = false;
 }
 
-void Image::loadFromFile (const char* filename, SDL_Renderer * renderer) {
+void Image::loadFromFile (const char* filename, SDL_Renderer * renderer)
+{
     surface = IMG_Load(filename);
     if (surface == NULL) {
         string nfn = string("../") + filename;
@@ -63,8 +67,9 @@ void Image::draw (SDL_Renderer * renderer, int x, int y, int w, int h) {
     r.w = (w<0)?surface->w:w;
     r.h = (h<0)?surface->h:h;
 
+
     if (has_changed) {
-        ok = SDL_UpdateTexture(texture,NULL,surface->pixels,surface->pitch);
+        ok = SDL_UpdateTexture(texture,NULL,(surface->pixels),(surface->pitch));
         assert(ok == 0);
         has_changed = false;
     }
@@ -99,7 +104,10 @@ sdlJeu::sdlJeu () : wor() {
         cout << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << endl;
         cout << "No sound !!!" << endl;
         //SDL_Quit();exit(1);
-        withSound = false;
+        withSound = false;sound = Mix_LoadWAV("data/son.wav");
+        if (sound == NULL) {
+                cout << "Failed to load son.wav! SDL_mixer Error: " << Mix_GetError() << endl; SDL_Quit(); exit(1);
+        }
     }
     else withSound = true;
 
@@ -164,13 +172,13 @@ void sdlJeu::sdlAff () {
   const Projectile* tabP = hero.getConstAddTabProj();
 
     // Afficher les sprites des murs et des pastilles
-	for (x=0;x<ter.getDimX();++x)
-		for (y=0;y<ter.getDimY();++y)
+	for (x=0;x<ter.getDimX();x++)
+		for (y=0;y<ter.getDimY();y++){
 			if (ter.getXY(x,y)=='#')
 				im_mur.draw(renderer,x*TAILLE_SPRITE,y*TAILLE_SPRITE,TAILLE_SPRITE,TAILLE_SPRITE);
 			else if (ter.getXY(x,y)=='.')
 				im_pastille.draw(renderer,x*TAILLE_SPRITE,y*TAILLE_SPRITE,TAILLE_SPRITE,TAILLE_SPRITE);
-
+      }
 	// Afficher le sprite du hero
 	im_hero.draw(renderer,hero.getX()*TAILLE_SPRITE,hero.getY()*TAILLE_SPRITE,TAILLE_SPRITE,TAILLE_SPRITE);
 
@@ -186,24 +194,41 @@ void sdlJeu::sdlAff () {
 
 void sdlJeu::sdlBoucle () {
     SDL_Event events;
+    SDL_Event event;
 	bool quit = false;
+      Point cs;
+      const Hero& h = wor.getConstHero();
+
 
     Uint32 fps = SDL_GetTicks(),t = SDL_GetTicks(), nt;
 
 	// tant que ce n'est pas la fin ...
 	while (!quit) {
+    // début du getsouris
+    char dirtemp=h.getDir();
+    int trucx = int (cs.x*32);
+    int * tempcsx=&trucx;
+    int trucy = int (cs.y*32);
+    int * tempcsy=&trucy;
+    SDL_GetMouseState(tempcsx,tempcsy);
+    cs.x=trucx;
+    cs.y=trucy;
+    //cout<<"cs.x  =  " <<trucx<<endl<<"cs.y  =  "<<trucy<<endl;
+    //fin du getsouris
 
         nt = SDL_GetTicks();
         if (nt-t>50) {
-            wor.actionsAutomatiques();
+            wor.actionsAutomatiques(cs);
             t = nt;
         }
+
 
 		// tant qu'il y a des evenements � traiter (cette boucle n'est pas bloquante)
 		while (SDL_PollEvent(&events)) {
 			if (events.type == SDL_QUIT) quit = true;           // Si l'utilisateur a clique sur la croix de fermeture
-			else if (events.type == SDL_KEYDOWN) {              // Si une touche est enfoncee
+			else if ((events.type == SDL_KEYDOWN) || (events.type == SDL_MOUSEBUTTONDOWN)) {              // Si une touche est enfoncee ou un clique souris est enfoncé
 				switch (events.key.keysym.scancode) {
+
           case SDL_SCANCODE_S:
     				wor.actionClavier('h');
     				break;
@@ -245,6 +270,10 @@ void sdlJeu::sdlBoucle () {
                     break;
 				default: break;
 				}
+
+
+
+
 				if ((withSound) && false)
                     Mix_PlayChannel(-1,sound,0);
 			}
@@ -252,7 +281,7 @@ void sdlJeu::sdlBoucle () {
 
 		// on affiche le jeu sur le buffer cach�
     nt = SDL_GetTicks();
-    if (nt-fps>33) {
+    if (nt-fps>100) {
   	sdlAff();
 
 		// on permute les deux buffers (cette fonction ne doit se faire qu'une seule fois dans la boucle)

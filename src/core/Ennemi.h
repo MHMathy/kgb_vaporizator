@@ -11,7 +11,7 @@
 //#include "Hero.h"
 #include "Point.h"
 
-/**
+ /**
 @brief Un Ennemi = sa position 2D
 */
 class Ennemi {
@@ -36,7 +36,8 @@ public:
 		bool getStatut () const;
 		Position getPosEn() const;
 
-    //void versHero (const Terrain & t, const Hero & a);
+		void deplacementEnnemi (const Terrain & t);
+
     void bougeAuto (const Terrain & t);
 
 };

@@ -12,8 +12,13 @@ public:
   bool operator==(const Point & a) const;
 
   Point& operator=(const Point& a);
-};
 
+/*  Point& operator+(const Point & a, Point & b);
+
+  Point& operator-(const Point & a, Point &b)*/
+
+};
 typedef Point Position;
 typedef Point Vecteur;
+
 #endif

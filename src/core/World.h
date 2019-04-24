@@ -26,8 +26,8 @@ public:
   const int& getNombreEnnemi() const;
 
 
-  void actionsAutomatiques ();
-  void actionClavier(const char touche); // rend vrai si mange une pastille, faux sinon
+  void actionsAutomatiques (Point cs);
+  void actionClavier(const char touche,int* p=0); // rend vrai si mange une pastille, faux sinon
 
 };
 

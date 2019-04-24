@@ -30,5 +30,6 @@ class Hero
     float getX() const;
     float getY() const;
     char getDir () const;
+    void CalculerDirHeroByChar(Point CoordSouris);
 };
 #endif

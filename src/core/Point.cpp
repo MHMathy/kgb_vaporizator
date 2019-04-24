@@ -23,3 +23,17 @@ Point& Point::operator=(const Point& a)
   y = a.y;
   return *this;
 }
+
+/*Point& Point::operator+(const Point& a, const& Point b)
+{
+  x=a.x + b.y;
+  y=a.y + b.y;
+  return *this;
+}
+
+Point& Point::operator-(const Point& a, const& Point b)
+{
+  x=a.x- b.y;
+  y=a.y- b.y;
+  return *this;
+}*/

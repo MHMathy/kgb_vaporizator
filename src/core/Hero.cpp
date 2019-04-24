@@ -1,12 +1,13 @@
 #include "Hero.h"
 #include "Projectile.h"
+#include <math.h>
 
 Hero::Hero()
 {
   ptVie = 100;
   direc = 'e';
   posHero.x = 1;
-  posHero.y = 1;
+  posHero.y = 8;
   nbproj = 20;
   tabProj = new Projectile[20];
   for(int i=0;i<nbproj;i++) tabProj[i]=Projectile();
@@ -35,6 +36,23 @@ void Hero::deplacementHaut (const Terrain & t)
 void Hero::deplacementBas(const Terrain & t)
 {
    if (t.estPositionValide(posHero.x,posHero.y-1)) posHero.y--;
+}
+
+void Hero::CalculerDirHeroByChar(Point CoordSouris)
+{
+	Point diff;
+	diff.x=CoordSouris.x - posHero.x;
+	diff.y=CoordSouris.y - posHero.y;
+
+	float ang=atan2(CoordSouris.x,CoordSouris.x)*180/M_PI;
+	if(ang < -45) ang+=360;
+
+
+	if (-45<ang && ang<=45){ direc='e'; }
+	else if (45<ang && ang<=135){ direc='n' ;}
+	else if (135<ang && ang<=225){ direc='o';}
+	else if (225<ang && ang<=-45){ direc='s';}
+
 }
 
 void Hero::tir(const char dir)

@@ -6,7 +6,6 @@
 #endif // WIN32
 #include "AffichageTXT.h"
 #include "txtJeu.h"
-#include "Jeu.h"
 #include "World.h"
 
 
