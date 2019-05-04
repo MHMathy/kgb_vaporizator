@@ -7,11 +7,13 @@
 class Niveau
 {
 public:
+  Position posSortie;
   int nbEn;
   Ennemi* tabEn;
   Terrain terrainActu;
 
   Niveau();
+  Niveau(string chemin,Position & pHero);
   ~Niveau();
 
 //creer fonction terrain qui renvoie tableau de position des ennemis

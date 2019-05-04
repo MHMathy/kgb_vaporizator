@@ -6,6 +6,7 @@ Hero::Hero()
 {
   ptVie = 100;
   direc = 'e';
+  direction=Vecteur(0,0);
   posHero.x = 1;
   posHero.y = 8;
   nbproj = 20;
@@ -38,31 +39,37 @@ void Hero::deplacementBas(const Terrain & t)
    if (t.estPositionValide(posHero.x,posHero.y-1)) posHero.y--;
 }
 
-void Hero::CalculerDirHeroByChar(Point CoordSouris)
+void Hero::CalculerDirHero(Point CoordSouris)
 {
-	Point diff;
-	diff.x=CoordSouris.x - posHero.x;
-	diff.y=CoordSouris.y - posHero.y;
-
-	float ang=atan2(CoordSouris.x,CoordSouris.x)*180/M_PI;
-	if(ang < -45) ang+=360;
-
-
-	if (-45<ang && ang<=45){ direc='e'; }
-	else if (45<ang && ang<=135){ direc='n' ;}
-	else if (135<ang && ang<=225){ direc='o';}
-	else if (225<ang && ang<=-45){ direc='s';}
-
+  Point diff;/*
+	diff.x=(CoordSouris.x - (posHero.x+1)*32)+16;
+	diff.y=(CoordSouris.y - (posHero.y+1)*32)+16;
+*/
+  diff.x=(CoordSouris.x - 360);
+  diff.y=(CoordSouris.y - 240);
+  if(abs(diff.x)>abs(diff.y))
+  {
+    direction = Vecteur(diff.x/abs(diff.x),diff.y/abs(diff.x));
+    if(diff.x>0)direc='d';
+    else if(diff.x<0)direc='g';
+  }
+  else if(abs(diff.x)<abs(diff.y))
+  {
+    direction = Vecteur(diff.x/abs(diff.y),diff.y/abs(diff.y));
+    if(diff.y>0)direc='b';
+    else if(diff.y<0)direc='h';
+  }
+  //cout<<direc<<endl;
 }
 
-void Hero::tir(const char dir)
+void Hero::tir(Point direction)
 {
   bool boucle = true;
   int i=0;
   while(boucle)
   {
     if(tabProj[i].getEtat()==false){
-      tabProj[i] = Projectile(posHero,dir);
+      tabProj[i] = Projectile(posHero,direction);
       boucle = false;
     }
     i++;
@@ -75,11 +82,6 @@ void Hero::majProj(const Terrain & ter, Ennemi* tabEnn,int nbEn)
   {
     tabProj[i].trajectoire(ter,tabEnn,nbEn);
   }
-}
-
-void Hero::chDir(const char newDir)
-{
-  direc = newDir;
 }
 
 Projectile* Hero::getAddTabProj()
@@ -100,4 +102,10 @@ float Hero::getX () const { return posHero.x; }
 
 float Hero::getY () const { return posHero.y; }
 
-char Hero::getDir () const { return direc; }
+Position Hero::getPosH () const { return posHero; }
+
+void Hero::setPos(Position pos){posHero=pos;}
+
+char Hero::getDirChar () const { return direc; }
+
+Vecteur Hero::getDirVect () const { return direction; }

@@ -46,8 +46,12 @@ private :
     Mix_Chunk * sound;
     bool withSound;
 
-    Image im_hero;
+    Image im_hero_d0;
+    Image im_hero_g0;
+    Image im_hero_b0;
+    Image im_hero_h0;
     Image im_mur;
+    Image im_sol;
     Image im_pastille;
     Image im_ennemi;
 

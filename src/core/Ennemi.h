@@ -24,6 +24,7 @@ private :
 public:
 		bool statut;
     Ennemi();
+		Ennemi(Position pEn);
 		~Ennemi();
 
     void gauche (const Terrain & t);

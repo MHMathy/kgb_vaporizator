@@ -17,7 +17,7 @@ private:
 public:
   Projectile(); // constructeur sans arguments, initialise à l'origine
   ~Projectile();
-  Projectile(Position posDepart, const char dir); // Constructeur qui initialise un projectile en fonction d'une position de départ en paramètre
+  Projectile(Position posDepart, Vecteur dir); // Constructeur qui initialise un projectile en fonction d'une position de départ en paramètre
 
 
   Position futurPos();
@@ -30,7 +30,7 @@ public:
   float getX () const;
 
   float getY () const;
-
+  Position getPosProj() const;
   bool getEtat () const;
 
 };

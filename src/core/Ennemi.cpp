@@ -5,6 +5,13 @@ Ennemi::Ennemi () {
 	posEn.x = posEn.y = 3;
 	dir = 0;
 }
+
+Ennemi::Ennemi (Position pEn) {
+	statut = true;
+	posEn = pEn;
+	dir = 0;
+}
+
 Ennemi::~Ennemi()
 {}
 

@@ -11,27 +11,12 @@ Projectile::Projectile()
   degats=0;
 }
 
-Projectile::Projectile(Position posDepart, const char dir)
+Projectile::Projectile(Position posDepart, Vecteur dir)
 {
   etat = true;
   posActu=posDepart;
   posInit=posDepart;
-  Vecteur newDirection;
-  switch(dir){
-    case 'o':
-      newDirection = Vecteur(-1,0);
-      break;
-    case 'e':
-      newDirection = Vecteur(1,0);
-      break;
-    case 'n':
-      newDirection = Vecteur(0,1);
-      break;
-    case 's':
-      newDirection = Vecteur(0,-1);
-      break;
-  }
-  direction=newDirection;
+  direction = Vecteur(dir.x,dir.y);
   degats = 1;
 }
 
@@ -47,12 +32,12 @@ Position Projectile::futurPos()
 }
 void Projectile::collisionTer(const Terrain & ter)
 {
-  if (ter.estPositionValide(posActu.x,posActu.y)==false) etat = false;
+  if (ter.estPositionValide(posActu.x+0.5,posActu.y+0.5)==false) etat = false;
 }
 
 void Projectile::collisionEn(Ennemi & en)
-{
-  if(posActu==en.getPosEn() && en.getStatut()) {
+{Position posE = en.getPosEn();
+  if(en.getStatut() && (posActu.x+0.5>posE.x) && (posActu.x+0.5<posE.x+1) && (posActu.y+0.5>posE.y) && (posActu.y+0.5<posE.y+1)) {
     etat = false;
     en.statut = false;
   }
@@ -75,5 +60,7 @@ void Projectile::chEtat()
 float Projectile::getX () const { return posActu.x; }
 
 float Projectile::getY () const { return posActu.y; }
+
+Position Projectile::getPosProj () const { return posActu; }
 
 bool Projectile::getEtat () const { return etat; }

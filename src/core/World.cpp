@@ -6,9 +6,9 @@
 
 
 
-World::World() : h(), niveauActu()
+World::World() : h()
 {
-
+  chargeNiveau(1);
 }
 
 World::~World()
@@ -36,19 +36,41 @@ const Ennemi * World::getConstAddTabEnn() const {return niveauActu.tabEn;}
 
 const int& World::getNombreEnnemi() const { return niveauActu.nbEn; }
 
-void World::actionsAutomatiques (Point coordSouris) {
+bool World::testSortie(){
+  return ((h.getX()>niveauActu.posSortie.x-0.5) && (h.getX()<niveauActu.posSortie.x+0.5) && (h.getY()>niveauActu.posSortie.y-0.5) && (h.getY()<niveauActu.posSortie.y+0.5));
+}
+
+void World::chargeNiveau(int numNiveau){
+  Position posH;
+  string chemin;
+  switch(numNiveau){
+    case 0:
+      chemin="data/testTerrain.txt";
+      niveauActu=Niveau(chemin,posH);
+      break;
+    case 1:
+      chemin="data/testTerrain1.txt";
+      niveauActu=Niveau(chemin,posH);
+      break;
+  }
+  h.setPos(posH);
+}
+
+void World::actionsAutomatiques (Point cs) {
     Terrain& t = getTerrain();
     Ennemi* en = getAddTabEnnemi();
     h.majProj(t,en,niveauActu.nbEn);
     for(int i=0;i<niveauActu.nbEn;i++){
       if(en[i].getStatut())en[i].deplacementEnnemi(t);
     }
-    h.CalculerDirHeroByChar(coordSouris);
+    h.CalculerDirHero(cs);
+    if(testSortie()==true)chargeNiveau(1);
 
 }
 
 
-void World::actionClavier (const char touche,int*p)
+
+void World::actionClavier (const char touche)
 {
 
   Terrain& t = getTerrain();
@@ -71,20 +93,8 @@ void World::actionClavier (const char touche,int*p)
 				h.deplacementBas(t);
         t.setTabDist(h.getX(),h.getY());
 		    break;
-    case  'o':
-        h.chDir('o');
-				break;
-		case  'e':
-        h.chDir('e');
-				break;
-		case  'n':
-				h.chDir('n');
-				break;
-		case  's':
-				h.chDir('s');
-				break;
     case  't':
-				h.tir(h.getDir());
+				h.tir(h.getDirVect());
 				break;
 	}
 }

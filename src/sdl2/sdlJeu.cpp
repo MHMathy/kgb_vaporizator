@@ -112,11 +112,14 @@ sdlJeu::sdlJeu () : wor() {
     else withSound = true;
 
 	int dimx, dimy;
+  /*
 	dimx = wor.getConstTerrain().getDimX();
 	dimy = wor.getConstTerrain().getDimY();
 	dimx = dimx * TAILLE_SPRITE;
 	dimy = dimy * TAILLE_SPRITE;
-
+  */
+  dimx=720;
+  dimy=480;
     // Creation de la fenetre
     window = SDL_CreateWindow("KGB Vaporizator", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, dimx, dimy, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     if (window == NULL) {
@@ -126,10 +129,15 @@ sdlJeu::sdlJeu () : wor() {
     renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
 
     // IMAGES
-    im_hero.loadFromFile("data/pacman.png",renderer);
-    im_mur.loadFromFile("data/mur.png",renderer);
+    im_hero_d0.loadFromFile("data/Hero/d0.png",renderer);
+    im_hero_g0.loadFromFile("data/Hero/g0.png",renderer);
+    im_hero_b0.loadFromFile("data/Hero/b0.png",renderer);
+    im_hero_h0.loadFromFile("data/Hero/h0.png",renderer);
+    im_mur.loadFromFile("data/mur2.png",renderer);
+    im_sol.loadFromFile("data/sol.png",renderer);
     im_pastille.loadFromFile("data/pastille.png",renderer);
     im_ennemi.loadFromFile("data/fantome.png",renderer);
+
 
     // FONTS
     font = TTF_OpenFont("data/DejaVuSansCondensed.ttf",50);
@@ -160,9 +168,14 @@ sdlJeu::~sdlJeu () {
     wor.~World();
 }
 
+bool visible(Position pHero,Position pElement){
+  return ((pElement.x-pHero.x>-12) && (pElement.x-pHero.x<13) && (pElement.y-pHero.y>-8) && (pElement.y-pHero.y<9));
+}
+
+
 void sdlJeu::sdlAff () {
 	//Remplir l'�cran de blanc
-    SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
+    SDL_SetRenderDrawColor(renderer, 0, 0,0, 255);
     SDL_RenderClear(renderer);
 
 	int x,y;
@@ -171,20 +184,57 @@ void sdlJeu::sdlAff () {
 	const Ennemi* enn = wor.getConstAddTabEnn();
   const Projectile* tabP = hero.getConstAddTabProj();
 
+
+
     // Afficher les sprites des murs et des pastilles
 	for (x=0;x<ter.getDimX();x++)
 		for (y=0;y<ter.getDimY();y++){
-			if (ter.getXY(x,y)=='#')
-				im_mur.draw(renderer,x*TAILLE_SPRITE,y*TAILLE_SPRITE,TAILLE_SPRITE,TAILLE_SPRITE);
-			else if (ter.getXY(x,y)=='.')
-				im_pastille.draw(renderer,x*TAILLE_SPRITE,y*TAILLE_SPRITE,TAILLE_SPRITE,TAILLE_SPRITE);
+			if (ter.getXY(x,y)=='#' && visible(hero.getPosH(),Position(x,y)))
+				im_mur.draw(renderer,344-(hero.getX()-x)*TAILLE_SPRITE,224-(hero.getY()-y)*TAILLE_SPRITE,TAILLE_SPRITE,TAILLE_SPRITE);
+      if (ter.getXY(x,y)=='.' && visible(hero.getPosH(),Position(x,y)))
+				im_sol.draw(renderer,344-(hero.getX()-x)*TAILLE_SPRITE,224-(hero.getY()-y)*TAILLE_SPRITE,TAILLE_SPRITE,TAILLE_SPRITE);
       }
 	// Afficher le sprite du hero
-	im_hero.draw(renderer,hero.getX()*TAILLE_SPRITE,hero.getY()*TAILLE_SPRITE,TAILLE_SPRITE,TAILLE_SPRITE);
+  /*
+  switch(hero.getDirChar()){
+    case 'd':
+      im_hero_d0.draw(renderer,hero.getX()*TAILLE_SPRITE,hero.getY()*TAILLE_SPRITE,TAILLE_SPRITE,TAILLE_SPRITE);
+      break;
+    case 'g':
+      im_hero_g0.draw(renderer,hero.getX()*TAILLE_SPRITE,hero.getY()*TAILLE_SPRITE,TAILLE_SPRITE,TAILLE_SPRITE);
+      break;
+    case 'h':
+      im_hero_h0.draw(renderer,hero.getX()*TAILLE_SPRITE,hero.getY()*TAILLE_SPRITE,TAILLE_SPRITE,TAILLE_SPRITE);
+      break;
+    case 'b':
+      im_hero_b0.draw(renderer,hero.getX()*TAILLE_SPRITE,hero.getY()*TAILLE_SPRITE,TAILLE_SPRITE,TAILLE_SPRITE);
+      break;
+  }
+*/
+  switch(hero.getDirChar()){
+    case 'd':
+      im_hero_d0.draw(renderer,344,224,TAILLE_SPRITE,TAILLE_SPRITE);
+      break;
+    case 'g':
+      im_hero_g0.draw(renderer,344,224,TAILLE_SPRITE,TAILLE_SPRITE);
+      break;
+    case 'h':
+      im_hero_h0.draw(renderer,344,224,TAILLE_SPRITE,TAILLE_SPRITE);
+      break;
+    case 'b':
+      im_hero_b0.draw(renderer,344,224,TAILLE_SPRITE,TAILLE_SPRITE);
+      break;
+  }
+
+
 
 	// Afficher le sprite des ennemis
-  for(int i=0;i<wor.getNombreEnnemi();i++){if(enn[i].getStatut())im_ennemi.draw(renderer,enn[i].getX()*TAILLE_SPRITE,enn[i].getY()*TAILLE_SPRITE,TAILLE_SPRITE,TAILLE_SPRITE);}
-  for(int i=0;i<hero.nbproj;i++) {if(tabP[i].getEtat())im_pastille.draw(renderer,tabP[i].getX()*TAILLE_SPRITE,tabP[i].getY()*TAILLE_SPRITE,TAILLE_SPRITE,TAILLE_SPRITE);}
+  for(int i=0;i<wor.getNombreEnnemi();i++){
+    if(enn[i].getStatut() && visible(hero.getPosH(),enn[i].getPosEn()))
+    im_ennemi.draw(renderer,344-(hero.getX()-enn[i].getX())*TAILLE_SPRITE,224-(hero.getY()-enn[i].getY())*TAILLE_SPRITE,TAILLE_SPRITE,TAILLE_SPRITE);}
+  for(int i=0;i<hero.nbproj;i++) {
+    if(tabP[i].getEtat() && visible(hero.getPosH(),tabP[i].getPosProj()))
+    im_pastille.draw(renderer,344-(hero.getX()-tabP[i].getX())*TAILLE_SPRITE,224-(hero.getY()-tabP[i].getY())*TAILLE_SPRITE,TAILLE_SPRITE,TAILLE_SPRITE);}
     // Ecrire un titre par dessus
     SDL_Rect positionTitre;
     positionTitre.x = 270;positionTitre.y = 49;positionTitre.w = 100;positionTitre.h = 30;
@@ -194,18 +244,14 @@ void sdlJeu::sdlAff () {
 
 void sdlJeu::sdlBoucle () {
     SDL_Event events;
-    SDL_Event event;
 	bool quit = false;
       Point cs;
-      const Hero& h = wor.getConstHero();
-
 
     Uint32 fps = SDL_GetTicks(),t = SDL_GetTicks(), nt;
 
 	// tant que ce n'est pas la fin ...
 	while (!quit) {
     // début du getsouris
-    char dirtemp=h.getDir();
     int trucx = int (cs.x*32);
     int * tempcsx=&trucx;
     int trucy = int (cs.y*32);
@@ -220,7 +266,7 @@ void sdlJeu::sdlBoucle () {
         if (nt-t>50) {
             wor.actionsAutomatiques(cs);
             t = nt;
-        }
+
 
 
 		// tant qu'il y a des evenements � traiter (cette boucle n'est pas bloquante)
@@ -244,24 +290,9 @@ void sdlJeu::sdlBoucle () {
     			case SDL_SCANCODE_D:
     				wor.actionClavier('d');
     				break;
-    			case SDL_SCANCODE_DOWN://72: //KEY_UP
-    				wor.actionClavier('n');
-    				break;
-
-    			case SDL_SCANCODE_UP://80: //KEY_DOWN
-    				wor.actionClavier('s');
-    				break;
-
-    			case SDL_SCANCODE_LEFT://75: //KEY_LEFT
-    				wor.actionClavier('o');
-    				break;
-
-    			case SDL_SCANCODE_RIGHT://77: //KEY_RIGHT
-    				wor.actionClavier('e');
-    				break;
 
     			case SDL_SCANCODE_SPACE:
-    				wor.actionClavier('t');
+    				wor.actionClavier('t'  );
     				break;
 					break;
                 case SDL_SCANCODE_ESCAPE:
@@ -272,7 +303,7 @@ void sdlJeu::sdlBoucle () {
 				}
 
 
-
+      }
 
 				if ((withSound) && false)
                     Mix_PlayChannel(-1,sound,0);
@@ -281,7 +312,7 @@ void sdlJeu::sdlBoucle () {
 
 		// on affiche le jeu sur le buffer cach�
     nt = SDL_GetTicks();
-    if (nt-fps>100) {
+    if (nt-fps>10) {
   	sdlAff();
 
 		// on permute les deux buffers (cette fonction ne doit se faire qu'une seule fois dans la boucle)

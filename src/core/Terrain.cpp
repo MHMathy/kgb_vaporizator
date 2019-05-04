@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "Point.h"
+
 
 
 
@@ -39,9 +39,7 @@ Terrain::Terrain () {
   }
 }
 
-Terrain::Terrain (string chemin) {
-
-
+Terrain::Terrain (string chemin,Position tabPos[],int & nbEn) {
     string terrain0[100];
     int i=0;
     ifstream file(chemin);
@@ -68,11 +66,33 @@ Terrain::Terrain (string chemin) {
   {
 		for(int y=0;y<dimy;++y)
 		{
-      terrain[x+y*dimx] = terrain0[y][x];
+      if(terrain0[y][x]=='H'){
+        cout<<"trouver hero"<<endl;
+        terrain[x+y*dimx]= '.';
+        tabPos[0]=Position(x,y);}
+      else if(terrain0[y][x]=='S'){
+        cout<<"trouver sortie"<<endl;
+        terrain[x+y*dimx]= '.';
+        tabPos[1]=Position(x,y);}
+      else if(terrain0[y][x]=='E'){
+        cout<<"trouver ennemi"<<endl;
+        terrain[x+y*dimx]= '.';
+        tabPos[nbEn+2]=Position(x,y);nbEn++;}
+      else{
+        terrain[x+y*dimx] = terrain0[y][x];
+      }
+
+
       tabDist[x+y*dimx] = 0;
 
     }
+  }/*
+  for(int x=0;x<dimx;++x)
+  {
+		for(int y=0;y<dimy;++y)cout<<terrain[x+y*dimx]<<' ';
+    cout<<endl;
   }
+  cout<<endl<<endl;*/
 }
 
 Terrain::~Terrain()
@@ -81,12 +101,12 @@ Terrain::~Terrain()
 
 bool Terrain::estPositionValide (const int x, const int y) const
 {
-	return ((x>=0) && (x<dimx) && (y>=0) && (y<dimy) && (terrain[x+y*dimx]==' '));
+	return ((x>=0) && (x<dimx) && (y>=0) && (y<dimy) && (terrain[x+y*dimx]=='.'));
 }
 
 bool Terrain::estPersoPositionValide (const int x, const int y) const
 {
-	return ((x>=0) && (x<dimx) && (y>=0) && (y<dimy) && (terrain[x+y*dimx]==' ') && (terrain[x+1+y*dimx]==' ')&& (terrain[x+(y+1)*dimx]==' ')&& (terrain[x+1+(y+1)*dimx]==' '));
+	return ((x>=0) && (x<dimx) && (y>=0) && (y<dimy) && (terrain[x+y*dimx]=='.') && (terrain[x+1+y*dimx]=='.')&& (terrain[x+(y+1)*dimx]=='.')&& (terrain[x+1+(y+1)*dimx]=='.'));
 }
 
 void Terrain::clearTabDist()
@@ -130,7 +150,6 @@ void Terrain::setTabDist(float x,float y)
     delete[] tabBuffActu;
     tabBuffActu=tabBuffSuiv;
     nbW=nbN;
-
   }/*
   for(int x=0;x<dimx;++x)
   {

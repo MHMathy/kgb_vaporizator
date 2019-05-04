@@ -11,6 +11,7 @@ class Hero
     Position posHero;
     int ptVie;
     char direc;
+    Vecteur direction;
 
     Projectile * tabProj;
   public:
@@ -23,13 +24,15 @@ class Hero
     void deplacementBas(const Terrain & t);
     Projectile* getAddTabProj();
     const Projectile* getConstAddTabProj() const;
-    void chDir(const char newDir);
-    void tir(const char dir);
+    void tir(Point direction);
     void majProj(const Terrain & ter, Ennemi* tabEnn,int nbEn);
     Projectile getConstTabProj(int i)const;
     float getX() const;
     float getY() const;
-    char getDir () const;
-    void CalculerDirHeroByChar(Point CoordSouris);
+    Position getPosH() const;
+    void setPos(Position pos);
+    char getDirChar () const;
+    Vecteur getDirVect () const;
+    void CalculerDirHero(Point CoordSouris);
 };
 #endif
